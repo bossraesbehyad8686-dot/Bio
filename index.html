@@ -187,7 +187,28 @@
   }
   .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-  .title { font-size: 17px; color: #e94560; font-weight: 700; margin-bottom: 30px; letter-spacing: 0.5px; }
+  .typewriter-container {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  .title-typed {
+    font-size: 17px;
+    color: #e94560;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    border-left: 2px solid #e94560; 
+    padding-left: 4px;
+    animation: blink-cursor 0.8s step-end infinite;
+  }
+
+  @keyframes blink-cursor {
+    from, to { border-color: transparent; }
+    50% { border-color: #e94560; }
+  }
 
   .stats { display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; flex-wrap: wrap; }
   .stat-box {
@@ -229,9 +250,6 @@
     opacity: 0.9;
   }
 
-  /* ==========================================
-     استایل بخش استریم (دکمه هدایت به آپارات)
-     ========================================== */
   .stream-section {
     margin-bottom: 30px;
     background: linear-gradient(135deg, rgba(233, 69, 96, 0.15), rgba(123, 44, 191, 0.15));
@@ -297,16 +315,81 @@
     background: linear-gradient(135deg, #ff5c77, #e94560);
   }
 
-  .btn-stream svg {
-    width: 24px;
-    height: 24px;
-    fill: #fff;
-  }
+  .btn-stream svg { width: 24px; height: 24px; fill: #fff; }
 
   @keyframes pulse-stream {
     0% { transform: scale(1); }
     50% { transform: scale(1.03); }
     100% { transform: scale(1); }
+  }
+
+  /* ==========================================
+     بخش همکاران و اسپانسرها
+     ========================================== */
+  .partners-section {
+    margin-bottom: 30px;
+    text-align: right;
+  }
+  
+  .partners-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .partners-title svg { width: 20px; height: 20px; fill: #e94560; }
+
+  .partners-grid {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .partner-item {
+    flex: 1;
+    min-width: 140px;
+    background: var(--box-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .partner-item:hover {
+    transform: translateY(-5px);
+    border-color: #e94560;
+    background: var(--box-hover);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+
+  .partner-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .partner-logo img { width: 100%; height: 100%; object-fit: cover; }
+  .partner-logo svg { width: 30px; height: 30px; fill: var(--text-muted); }
+
+  .partner-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-main);
   }
   /* ========================================== */
 
@@ -489,27 +572,16 @@
 
   .footer-text { margin-top: 20px; font-size: 13px; color: var(--text-muted); opacity: 0.7; }
 
-  /* دکمه شناور بله */
   .floating-bale {
-    position: fixed;
-    bottom: 30px;
-    left: 30px;
-    width: 60px;
-    height: 60px;
-    background: #00b894;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: fixed; bottom: 30px; left: 30px;
+    width: 60px; height: 60px;
+    background: #00b894; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
     box-shadow: 0 10px 25px rgba(0, 184, 148, 0.5);
-    z-index: 1000;
-    transition: all 0.3s ease;
+    z-index: 1000; transition: all 0.3s ease;
     animation: float-bale 3s ease-in-out infinite;
   }
-  .floating-bale:hover {
-    transform: scale(1.1) translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0, 184, 148, 0.7);
-  }
+  .floating-bale:hover { transform: scale(1.1) translateY(-5px); box-shadow: 0 15px 35px rgba(0, 184, 148, 0.7); }
   .floating-bale svg { width: 30px; height: 30px; fill: #fff; }
 
   @keyframes float-bale {
@@ -527,8 +599,10 @@
     .theme-toggle { top: 15px; left: 15px; width: 38px; height: 38px; font-size: 16px; }
     .video-grid { grid-template-columns: 1fr; }
     .poll-options { flex-direction: column; }
+    .partners-grid { flex-direction: column; }
     .floating-bale { bottom: 20px; left: 20px; width: 50px; height: 50px; }
     .floating-bale svg { width: 25px; height: 25px; }
+    .title-typed { font-size: 15px; }
   }
 </style>
 </head>
@@ -549,7 +623,10 @@
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
     </button>
   </div>
-  <div class="title">تولیدکننده محتوا | دوبله و فوتبال</div>
+  
+  <div class="typewriter-container">
+    <div class="title-typed" id="typewriter"></div>
+  </div>
 
   <div class="stats">
     <div class="stat-box">
@@ -570,9 +647,6 @@
     سلام! من آرموند موسویان هستم. از سال <strong>۱۴۰۰</strong> فعالیت خودم رو شروع کردم. توی کانالم محتواهای <strong>دوبله</strong> و <strong>فوتبالی</strong> منتشر می‌کنم. خوشحال می‌شم منو دنبال کنید!
   </div>
 
-  <!-- ==========================================
-       بخش استریم (دکمه هدایت به آپارات)
-       ========================================== -->
   <div class="stream-section">
     <div class="stream-title">
       <span class="live-dot"></span>
@@ -583,6 +657,23 @@
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
       ورود به استریم
     </a>
+  </div>
+
+  <!-- بخش اسپانسر (امین) -->
+  <div class="partners-section">
+    <div class="partners-title">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      اسپانسر
+    </div>
+    <div class="partners-grid">
+      <a href="https://aparat.com/amin097" target="_blank" rel="noopener" class="partner-item">
+        <div class="partner-logo">
+          <!-- اگر عکس لوگو داشتی اینجا بذار: <img src="logo-amin.png" alt=""> -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        </div>
+        <div class="partner-name">آپارات امین</div>
+      </a>
+    </div>
   </div>
 
   <div class="poll-container">
@@ -683,7 +774,6 @@
   <div class="footer-text">طراحی شده برای آرموند موسویان</div>
 </div>
 
-<!-- دکمه شناور بله -->
 <a href="https://ble.ir/armondadmin" target="_blank" rel="noopener" class="floating-bale" title="پیام سریع در بله">
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
 </a>
@@ -693,7 +783,46 @@
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
 <script>
-  // اسکریپت ذرات معلق
+  const textElement = document.getElementById("typewriter");
+  const phrases = [
+    "تولیدکننده محتوا",
+    "دوبلور و گوینده",
+    "عاشق فوتبال",
+    "آرموند موسویان هستم"
+  ];
+  
+  let phraseIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  let typingSpeed = 100;
+
+  function type() {
+    const currentPhrase = phrases[phraseIndex];
+    
+    if (isDeleting) {
+      textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+      charIndex--;
+      typingSpeed = 50; 
+    } else {
+      textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+      charIndex++;
+      typingSpeed = 100; 
+    }
+
+    if (!isDeleting && charIndex === currentPhrase.length) {
+      isDeleting = true;
+      typingSpeed = 2000; 
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+      typingSpeed = 500; 
+    }
+
+    setTimeout(type, typingSpeed);
+  }
+  
+  setTimeout(type, 1000);
+
   particlesJS("particles-js", {
     "particles": {
       "number": { "value": 40, "density": { "enable": true, "value_area": 800 } },
@@ -712,7 +841,6 @@
     "retina_detect": true
   });
 
-  // اسکریپت تم روشن / تاریک
   const themeToggle = document.getElementById('themeToggle');
   const body = document.body;
 
@@ -733,7 +861,6 @@
     }
   });
 
-  // اسکریپت کپی لینک
   const copyBtn = document.getElementById('copyBtn');
   const toast = document.getElementById('toast');
 
@@ -746,7 +873,6 @@
     });
   });
 
-  // اسکریپت تایمر سابقه (از سال ۱۴۰۰)
   const startDate = new Date('2021-03-21'); 
   const now = new Date();
   
@@ -767,7 +893,6 @@
   const experienceTimeText = `${years} سال و ${months} ماه`;
   document.getElementById('experience-time').textContent = experienceTimeText;
 
-  // اسکریپت نظرسنجی
   let votes = { dubbing: 45, football: 55 };
   const hasVoted = localStorage.getItem('hasVoted');
 
@@ -800,7 +925,6 @@
     document.getElementById('poll-football').style.cursor = 'default';
   }
 
-  // اسکریپت موزیک
   const music = document.getElementById('bgMusic');
   const playBtn = document.getElementById('playBtn');
   const playIcon = document.getElementById('playIcon');
@@ -818,7 +942,6 @@
     }
   });
 
-  // اسکریپت شمارش اعداد
   const targetFollowers = 300;
   const targetViews = 5000;
 
